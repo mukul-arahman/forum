@@ -14,6 +14,8 @@ class ParticipateInThreadsTest extends TestCase
     {
         $this->expectException('Illuminate\Auth\AuthenticationException');
 
+        $this->withoutExceptionHandling();
+
         $this->post('/threads/1/replies', []);
     }
 

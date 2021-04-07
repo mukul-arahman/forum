@@ -24,11 +24,23 @@ class ParticipateInThreadsTest extends TestCase
         $this->singIn();
 
         $thread = create('App\Thread');
-
         $reply = make('App\Reply');
+
         $this->post($thread->path() . '/replies', $reply->toArray());
 
         $this->get($thread->path())
             ->assertSee($reply->body);
+    }
+
+    /** @test */
+    public function a_replies_requires_a_body()
+    {
+        $this->singIn();
+
+        $thread = create('App\Thread');
+        $reply = make('App\Reply', ['body' => null]);
+
+        $this->post($thread->path() . '/replies', $reply->toArray())
+            ->assertSessionHasErrors('body');
     }
 }

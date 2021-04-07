@@ -12,17 +12,16 @@ class ParticipateInThreadsTest extends TestCase
     /** @test */
     public function an_unauthenticated_user_may_not_add_replies()
     {
-        $this->expectException('Illuminate\Auth\AuthenticationException');
-
-        $this->withoutExceptionHandling();
-
-        $this->post('/threads/1/replies', []);
+        $this->post('/threads/some-channel/1/replies', [])
+            ->assertRedirect('/login');
     }
 
     /** @test */
     public function an_authenticated_user_may_participate_in_forum_threads()
     {
-        $this->be(create('App\User'));
+        $this->withoutExceptionHandling();
+
+        $this->singIn();
 
         $thread = create('App\Thread');
 

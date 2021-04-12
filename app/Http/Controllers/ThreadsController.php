@@ -18,6 +18,8 @@ class ThreadsController extends Controller
      * Display a listing of the resource.
      *
      * @param Channel $channel
+     * @param ThreadFilters $filters
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(Channel $channel, ThreadFilters $filters)

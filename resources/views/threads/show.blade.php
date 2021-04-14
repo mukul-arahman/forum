@@ -21,7 +21,7 @@
                 @include('threads.reply')
             @endforeach
 
-            {{ $replies->links() }}
+            {{-- {{ $replies->links() }} --}}
 
             @if (auth()->check())
                 <form method="POST" action="{{ $thread->path() . '/replies'}}">
@@ -34,7 +34,7 @@
                     <button type="submit" class="btn btn-dark">Post</button>
                 </form>
             @else
-                <p class="text-center">Please <a href="{{ route('login') }}">sing in</a> to participate in this discussion</p>
+                <p class="text-center">Please <a href="{{ route('login') }}">Sing in</a> to participate in this discussion</p>
             @endif
         </div><!-- /.col-8 -->
 

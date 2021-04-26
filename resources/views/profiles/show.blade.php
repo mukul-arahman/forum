@@ -17,7 +17,7 @@
                             <div class="d-flex justify-content-between">
                                 <span>
                                     <a href="{{ route('profile', $thread->creator)}}">{{ $thread->creator->name }}</a> posted:
-                                    {{ $thread->title }}
+                                    <a href="{{ $thread->path() }}"> {{ $thread->title }}</a>
                                 </span>
 
                                 <span>

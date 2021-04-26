@@ -4,30 +4,27 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Forum Threads') }}</div>
-
-                <div class="card-body">
-                    @foreach ($threads as $thread)
-                        <article>
-                            <div class="level">
-                                <h4 class="flex">
-                                    <a href="{{ $thread->path() }}">
-                                        {{ $thread->title }}
-                                    </a>
-                                </h4>
-
+            @foreach ($threads as $thread)
+                <div class="card" style="margin-bottom: 10px;">
+                    <div class="card-header">
+                        <div class="level">
+                            <h4 class="flex">
                                 <a href="{{ $thread->path() }}">
-                                    {{ $thread->replies_count }} {{ Str::plural('reply', $thread->replies_count )}}
+                                    {{ $thread->title }}
                                 </a>
-                            </div><!-- /.level -->
+                            </h4>
 
-                            <div class="body">{{ $thread->body }}</div>
-                        </article>
-                        <hr />
-                    @endforeach
-                </div>
-            </div>
+                            <a href="{{ $thread->path() }}">
+                                {{ $thread->replies_count }} {{ Str::plural('reply', $thread->replies_count )}}
+                            </a>
+                        </div><!-- /.level -->
+                    </div>
+
+                    <div class="card-body">
+                        <div class="body">{{ $thread->body }}</div>
+                    </div>
+                </div><!-- /.card -->
+            @endforeach
         </div>
     </div>
 </div>

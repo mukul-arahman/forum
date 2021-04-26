@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8 offset-md-2">
                 <div class="pb-2 mt-4 mb-2 border-bottom">
                     <h1>
                         {{ $profileUser->name }}

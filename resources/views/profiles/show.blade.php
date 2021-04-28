@@ -7,32 +7,16 @@
                 <div class="pb-2 mt-4 mb-2 border-bottom">
                     <h1>
                         {{ $profileUser->name }}
-                        <small>Since {{ $profileUser->created_at->diffForHumans() }}</small>
                     </h1>
                 </div>
 
-                @foreach ($threads as $thread)
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between">
-                                <span>
-                                    <a href="{{ route('profile', $thread->creator)}}">{{ $thread->creator->name }}</a> posted:
-                                    <a href="{{ $thread->path() }}"> {{ $thread->title }}</a>
-                                </span>
+                @foreach ($activities as $date => $activity)
+                    <div class="pb-2 mt-4 mb-2 border-bottom">{{ $date }}</div>
 
-                                <span>
-                                    {{ $thread->created_at->diffForHumans() }}
-                                </span>
-                            </div>
-                        </div><!-- /.card-header -->
-
-                        <div class="card-body">
-                            {{ $thread->body }}
-                        </div>
-                    </div><!-- /.card -->
+                    @foreach ($activity as $record)
+                        @include("profiles.activities.{$record->type}", ['activity' => $record])
+                    @endforeach
                 @endforeach
-
-                {{ $threads->links() }}
             </div><!-- /.col-12 -->
         </div><!-- /.row -->
     </div>

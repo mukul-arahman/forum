@@ -43,7 +43,7 @@ class ReadThreadsTest extends TestCase
     /** @test */
     function a_user_can_filter_threads_according_to_a_channel()
     {
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
 
         $channel = create('App\Channel');
         $threadInChannel = create('App\Thread', ['channel_id' => $channel->id]);

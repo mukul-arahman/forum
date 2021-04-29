@@ -1,4 +1,4 @@
-<reply :attributes="{{ $reply }}" inline-template v-clock>
+<reply :attributes="{{ $reply }}" inline-template>
     <div id="reply-{{ $reply->id }}" class="card" style="margin-bottom: 15px;">
         <div class="card-header">
             <div class="d-flex justify-content-between">
@@ -36,13 +36,7 @@
         @can ('update', $reply)
             <div class="card-footer level">
                 <button class="btn btn-warning btn-sm mr-1" @click="editing = true">Edit</button>
-
-                <form method="POST" action="/replies/{{ $reply->id }}">
-                    @csrf
-                    @method('DELETE')
-
-                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                </form>
+                <button class="btn btn-danger btn-sm mr-1" @click="destroy">Delete</button>
             </div>
         @endcan
     </div>

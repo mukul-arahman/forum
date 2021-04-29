@@ -14,7 +14,9 @@
                     <div class="pb-2 mt-4 mb-2 border-bottom">{{ $date }}</div>
 
                     @foreach ($activity as $record)
-                        @include("profiles.activities.{$record->type}", ['activity' => $record])
+                        @if (view()->exists("profiles.activities.{$record->type}"))
+                            @include("profiles.activities.{$record->type}", ['activity' => $record])
+                        @endif
                     @endforeach
                 @endforeach
             </div><!-- /.col-12 -->

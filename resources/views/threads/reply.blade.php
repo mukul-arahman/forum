@@ -1,4 +1,4 @@
-<div class="card" style="margin-bottom: 15px;">
+<div id="reply-{{ $reply->id }}" class="card" style="margin-bottom: 15px;">
     <div class="card-header">
         <div class="d-flex justify-content-between">
             <h5>

@@ -4,6 +4,7 @@ namespace App;
 
 use App\Reply;
 use App\Channel;
+use App\Filters\ThreadFilters;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,13 +19,21 @@ class Thread extends Model
      */
     protected $guarded = [];
 
+    /**
+     * The relationships to always eager-load.
+     *
+     * @var array
+     */
     protected $with = ['creator', 'channel'];
 
+    /**
+     * Boot the model.
+     */
     protected static function boot()
     {
         parent::boot();
 
-        static::addGlobalScope('replyCount', function ($builder){
+        static::addGlobalScope('replyCount', function ($builder) {
             $builder->withCount('replies');
         });
 
@@ -33,34 +42,64 @@ class Thread extends Model
         });
     }
 
+    /**
+     * Get a string path for the thread.
+     *
+     * @return string
+     */
     public function path()
     {
-        return "/threads/{$this->channel->slug}/$this->id";
+        return "/threads/{$this->channel->slug}/{$this->id}";
     }
 
-    public function replies()
-    {
-        // select * from replies where reply.thread_id = thread.id
-        return $this->hasMany(Reply::class);
-    }
-
+    /**
+     * A thread belongs to a creator.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function creator()
     {
-        // select * from user where user.id = thread.user_id
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    /**
+     * A thread is assigned a channel.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function channel()
     {
         return $this->belongsTo(Channel::class);
     }
 
+    /**
+     * A thread may have many replies.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
+
+    /**
+     * Add a reply to the thread.
+     *
+     * @param $reply
+     */
     public function addReply($reply)
     {
         $this->replies()->create($reply);
     }
 
-    public function scopeFilter($query, $filters)
+    /**
+     * Apply all relevant thread filters.
+     *
+     * @param  Builder       $query
+     * @param  ThreadFilters $filters
+     * @return Builder
+     */
+    public function scopeFilter($query, ThreadFilters $filters)
     {
         return $filters->apply($query);
     }

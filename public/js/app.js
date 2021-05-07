@@ -38357,7 +38357,7 @@ var render = function() {
       on: { click: _vm.toggle }
     },
     [
-      _c("span", { staticClass: "glyphicon glyphicon-heart" }),
+      _c("i", { staticClass: "fa fa-heart", attrs: { "aria-hidden": "true" } }),
       _vm._v(" "),
       _c("span", { domProps: { textContent: _vm._s(_vm.count) } })
     ]

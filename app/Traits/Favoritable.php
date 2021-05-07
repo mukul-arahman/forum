@@ -7,6 +7,16 @@ use App\Favorite;
 trait Favoritable
 {
     /**
+     * If associated model of favorite is deleted, delete favorite also
+     */
+    protected static function bootFavoritable()
+    {
+        static::deleting(function ($model) {
+            $model->favorites->each->delete();
+        });
+    }
+
+    /**
      * A reply can be favorited.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
@@ -26,15 +36,20 @@ trait Favoritable
         $attributes = ['user_id' => auth()->id()];
 
         if (! $this->favorites()->where($attributes)->exists()) {
-            $this->favorites()->create($attributes);
+            return $this->favorites()->create($attributes);
         }
     }
 
+    /**
+     * Unfavorite the current reply.
+     */
     public function unfavorite()
     {
         $attributes = ['user_id' => auth()->id()];
 
-        $this->favorites()->where($attributes)->delete();
+        // to fire this model delete event use 2nd query
+        //$this->favorites()->where($attributes)->delete();
+        $this->favorites()->where($attributes)->get()->each->delete();
     }
 
     /**
@@ -47,11 +62,21 @@ trait Favoritable
         return !! $this->favorites->where('user_id', auth()->id())->count();
     }
 
+    /**
+     * Fetch the favorited status as a property.
+     *
+     * @return bool
+     */
     public function getIsFavoritedAttribute()
     {
         return $this->isFavorited();
     }
 
+    /**
+     * Get the number of favorites for the reply.
+     *
+     * @return integer
+     */
     public function getFavoritesCountAttribute()
     {
         return $this->favorites->count();

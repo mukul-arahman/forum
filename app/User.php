@@ -31,29 +31,30 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    /**
-     * Get the route key for the model.
+     * Get the route key name for Laravel.
      *
      * @return string
      */
     public function getRouteKeyName()
     {
-        return 'name'; //username
+        return 'name';
     }
 
+    /**
+     * Fetch all threads that were created by the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function threads()
     {
         return $this->hasMany(Thread::class)->latest();
     }
 
+    /**
+     * Get all activity for the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function activity()
     {
         return $this->hasMany(Activity::class);

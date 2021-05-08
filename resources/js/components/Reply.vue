@@ -4,7 +4,7 @@
             <div class="d-flex justify-content-between">
                 <h5>
                     <a :href="'/profiles/'+data.owner.name"
-                    v-text="data.owner.name">
+                        v-text="data.owner.name">
                     </a> said {{ data.created_at }}...
                 </h5>
 

@@ -28,6 +28,9 @@
                         <li class="nav-item">
                             <a href="/threads?popular=1" class="nav-link">Popular Threads</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="/threads?unanswered=1" class="nav-link">Unanswered Threads</a>
+                        </li>
                     </ul>
                 </li>
 

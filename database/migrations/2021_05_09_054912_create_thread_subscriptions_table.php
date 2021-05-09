@@ -20,6 +20,8 @@ class CreateThreadSubscriptionsTable extends Migration
                     ->constrained()
                     ->onDelete('cascade');
             $table->timestamps();
+
+            $table->unique(['user_id', 'thread_id']);
         });
     }
 

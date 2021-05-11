@@ -6,6 +6,7 @@ use App\Reply;
 use App\Channel;
 use App\Filters\ThreadFilters;
 use App\Traits\RecordsActivity;
+use App\Events\ThreadHasNewReply;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
@@ -95,13 +96,18 @@ class Thread extends Model
     {
         $reply = $this->replies()->create($reply);
 
-        // Prepare notifications for all subscribers.
+        //event (new ThreadHasNewReply($this, $reply));
+        $this->notifySubscribers($reply);
+
+        return $reply;
+    }
+
+    public function notifySubscribers($reply)
+    {
         $this->subscriptions
             ->where('user_id', '!=', $reply->user_id)
             ->each
             ->notify($reply);
-
-        return $reply;
     }
 
     /**

@@ -173,10 +173,6 @@ class Thread extends Model
 
     public function hasUpdatesFor($user = null)
     {
-        if (! $user) {
-            return false;
-        }
-
         $user = $user ?: auth()->user();
 
         $key = $user->visitedThreadCacheKey($this);

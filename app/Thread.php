@@ -26,6 +26,11 @@ class Thread extends Model
      */
     protected $with = ['creator', 'channel'];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
     protected $appends = ['isSubscribedTo'];
 
     /**
@@ -84,7 +89,7 @@ class Thread extends Model
      * Add a reply to the thread.
      *
      * @param array $reply
-     * @return Reply
+     * @return Model
      */
     public function addReply($reply)
     {
@@ -92,13 +97,9 @@ class Thread extends Model
 
         // Prepare notifications for all subscribers.
         $this->subscriptions
-            ->filter(function ($sub) use ($reply) {
-                return $sub->user_id != $reply->user_id;
-            })
-            ->each->notify($reply);
-            // ->each(function ($sub) use ($reply) {
-            //     $sub->user->notify(new ThreadWasUpdated($this, $reply));
-            // });
+            ->where('user_id', '!=', $reply->user_id)
+            ->each
+            ->notify($reply);
 
         return $reply;
     }
@@ -115,6 +116,12 @@ class Thread extends Model
         return $filters->apply($query);
     }
 
+    /**
+     * Subscribe a user to the current thread.
+     *
+     * @param  int|null $userId
+     * @return $this
+     */
     public function subscribe($userId = null)
     {
         $this->subscriptions()->create([
@@ -124,6 +131,11 @@ class Thread extends Model
         return $this;
     }
 
+    /**
+     * Unsubscribe a user from the current thread.
+     *
+     * @param int|null $userId
+     */
     public function unsubscribe($userId = null)
     {
         $this->subscriptions()
@@ -131,11 +143,21 @@ class Thread extends Model
             ->delete();
     }
 
+    /**
+     * A thread can have many subscriptions.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function subscriptions()
     {
         return $this->hasMany(ThreadSubscription::class);
     }
 
+     /**
+     * Determine if the current user is subscribed to the thread.
+     *
+     * @return boolean
+     */
     public function getIsSubscribedToAttribute()
     {
         return $this->subscriptions()

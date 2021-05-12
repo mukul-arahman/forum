@@ -34,6 +34,16 @@ class CreateThreadsTest extends TestCase
             ->assertSee($thread->body);
     }
 
+    public function publishThread($overrides = [])
+    {
+        $this->singIn();
+
+        $thread = make('App\Thread', $overrides);
+
+        return $this->post('/threads', $thread->toArray());
+    }
+
+
     /** @test */
     public function a_thread_requires_a_title()
     {
@@ -58,15 +68,6 @@ class CreateThreadsTest extends TestCase
     {
         $this->publishThread(['body' => null])
             ->assertSessionHasErrors('body');
-    }
-
-    public function publishThread($overrides = [])
-    {
-        $this->singIn();
-
-        $thread = make('App\Thread', $overrides);
-
-        return $this->post('/threads', $thread->toArray());
     }
 
     /** @test */

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use App\Reply;
 use App\Thread;
 use App\Rules\SpamFree;
@@ -32,26 +31,10 @@ class RepliesController extends Controller
      */
     public function store($channelId, Thread $thread, CreatePostRequest $form)
     {
-        $reply = $thread->addReply([
+        return $thread->addReply([
             'body' => request('body'),
             'user_id' => auth()->id(),
-        ]);
-
-        // Inspect the body of the reply for username mentioned
-        preg_match_all('/\@([^\s\.]+)/', $reply->body, $matches);
-        // there are two arrays with @ and without @
-
-        foreach ($matches[1] as $name) {
-            $user = User::whereName($name)->first();
-
-            if ($user) {
-                $user->notify(new YouWereMentioned($reply));
-            }
-        }
-
-        // And then for each mentioned user, notify them
-
-        return $reply->load('owner');
+        ])->load('owner');
     }
 
     public function update(Reply $reply)

@@ -7,7 +7,7 @@ use App\Favorite;
 trait Favoritable
 {
     /**
-     * If associated model of favorite is deleted, delete favorite also
+     * Boot the trait.
      */
     protected static function bootFavoritable()
     {

@@ -12,11 +12,20 @@ use App\Http\Requests\CreatePostRequest;
 
 class RepliesController extends Controller
 {
+    /**
+     * Create a new RepliesController instance.
+     */
     public function __construct()
     {
         $this->middleware('auth')->except('index');
     }
 
+    /**
+     * Fetch all relevant replies.
+     *
+     * @param int $channelId
+     * @param Thrad $thread
+     */
     public function index($channelId, Thread $thread)
     {
         return $thread->replies()->paginate(5);
@@ -37,6 +46,11 @@ class RepliesController extends Controller
         ])->load('owner');
     }
 
+    /**
+     * Update an existing reply.
+     *
+     * @param Reply $reply
+     */
     public function update(Reply $reply)
     {
         $this->authorize('update', $reply);
@@ -48,6 +62,12 @@ class RepliesController extends Controller
         $reply->update(request(['body']));
     }
 
+    /**
+     * Delete the given reply
+     *
+     * @param Reply $reply
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(Reply $reply)
     {
         $this->authorize('update', $reply);

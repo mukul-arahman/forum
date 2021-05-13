@@ -18,10 +18,10 @@ class SpamFree implements Rule
     }
 
     /**
-     * Determine if the validation rule passes.
+     * Determine if the given attribute passes our spam validation.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param  string $attribute
+     * @param  string $value
      * @return bool
      */
     public function passes($attribute, $value)

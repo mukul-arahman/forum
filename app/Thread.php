@@ -163,6 +163,12 @@ class Thread extends Model
             ->exists();
     }
 
+    /**
+     * Determine if the thread has been updated since the user last read it.
+     *
+     * @param  User $user
+     * @return bool
+     */
     public function hasUpdatesFor($user = null)
     {
         $user = $user ?: auth()->user();

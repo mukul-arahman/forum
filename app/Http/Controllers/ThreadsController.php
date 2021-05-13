@@ -11,6 +11,9 @@ use App\Filters\ThreadFilters;
 
 class ThreadsController extends Controller
 {
+    /**
+     * Create a new ThreadController instance.
+     */
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
@@ -98,8 +101,7 @@ class ThreadsController extends Controller
      */
     public function show($channel, Thread $thread)
     {
-        if (auth()->check())
-        {
+        if (auth()->check()) {
             auth()->user()->read($thread);
         }
 

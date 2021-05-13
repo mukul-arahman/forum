@@ -22,33 +22,50 @@
 </template>
 
 <script>
-export default {
-    data() {
-        return {
-            body: '',
-        }
-    },
+    import 'jquery.caret';
+    import 'at.js';
 
-    computed: {
-        signedIn() {
-            return window.App.signedIn;
-        }
-    },
+    export default {
+        data() {
+            return {
+                body: '',
+            }
+        },
 
-    methods: {
-        addReply() {
-            axios.post(location.pathname + '/replies', { body: this.body })
-                .catch(error => {
-                    flash(error.response.data, 'danger');
-                })
-                .then(({data}) => {
-                    this.body = '';
+        computed: {
+            signedIn() {
+                return window.App.signedIn;
+            }
+        },
 
-                    flash('You reply has been posted.');
+        mounted() {
+            $('#body').atwho({
+                at: "@",
+                delay: 750,
+                callbacks: {
+                    remoteFilter: function(query, callback) {
+                        $.getJSON("/api/users", {name: query}, function(usernames) {
+                            callback(usernames)
+                        });
+                    }
+                }
+            });
+        },
 
-                    this.$emit('created', data);
-                });
+        methods: {
+            addReply() {
+                axios.post(location.pathname + '/replies', { body: this.body })
+                    .catch(error => {
+                        flash(error.response.data, 'danger');
+                    })
+                    .then(({data}) => {
+                        this.body = '';
+
+                        flash('You reply has been posted.');
+
+                        this.$emit('created', data);
+                    });
+            }
         }
     }
-}
 </script>

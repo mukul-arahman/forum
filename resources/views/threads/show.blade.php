@@ -12,12 +12,16 @@
                     <div class="card" style="margin-bottom: 15px;">
                         <div class="card-header">
                             <div class="d-flex justify-content-between">
-                                <span>
-                                    <a href="{{ route('profile', $thread->creator )}}">
-                                        {{ __($thread->creator->name) }}
-                                    </a> posted:
-                                    {{ __($thread->title) }}
-                                </span>
+                                <div class="d-flex">
+                                    <img src="{{ $thread->creator->avatar() }}" alt="" width="25"  class="mr-1">
+
+                                    <span>
+                                        <a href="{{ route('profile', $thread->creator )}}">
+                                            {{ __($thread->creator->name) }}
+                                        </a> posted:
+                                        {{ __($thread->title) }}
+                                    </span>
+                                </div>
 
                                 <span>
                                     @can ('update', $thread)

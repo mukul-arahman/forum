@@ -2245,6 +2245,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2271,7 +2272,7 @@ __webpack_require__.r(__webpack_exports__);
 
       return this.authorize(function (user) {
         return _this.data.user_id == user.id;
-      }); //return this.data.user_id == window.App.user.id
+      });
     }
   },
   methods: {
@@ -60615,7 +60616,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-sm btn-link",
-                    attrs: { type: "button" },
+                    attrs: { type: "submit" },
                     on: {
                       click: function($event) {
                         _vm.editing = false
@@ -60626,7 +60627,7 @@ var render = function() {
                 )
               ])
             ])
-          : _c("div", { domProps: { textContent: _vm._s(_vm.body) } })
+          : _c("div", { domProps: { innerHTML: _vm._s(_vm.body) } })
       ]),
       _vm._v(" "),
       _vm.canUpdate

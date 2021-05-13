@@ -22,11 +22,12 @@
                     </div>
 
                     <button class="btn btn-sm btn-primary">Update</button>
-                    <button class="btn btn-sm btn-link" @click="editing = false" type="button">Cancel</button>
+                    <button class="btn btn-sm btn-link" @click="editing = false" type="submit">Cancel</button>
                 </form>
             </div>
 
-            <div v-else v-text="body"></div>
+            <!-- <div v-else v-text="body"></div> -->
+            <div v-else v-html="body"></div>
         </div>
 
         <div class="card-footer level" v-if="canUpdate">
@@ -64,7 +65,6 @@
 
             canUpdate() {
                 return this.authorize(user => this.data.user_id == user.id);
-                //return this.data.user_id == window.App.user.id
             }
         },
 

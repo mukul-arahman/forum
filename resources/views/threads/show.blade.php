@@ -13,7 +13,7 @@
                         <div class="card-header">
                             <div class="d-flex justify-content-between">
                                 <div class="d-flex">
-                                    <img src="{{ $thread->creator->avatar() }}" alt="" width="25"  class="mr-1">
+                                    <img src="{{ $thread->creator->avatar_path }}" alt="" width="25"  class="mr-1">
 
                                     <span>
                                         <a href="{{ route('profile', $thread->creator )}}">

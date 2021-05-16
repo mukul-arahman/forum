@@ -8,6 +8,18 @@
 
             {{ $threads->render() }}
         </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Threading Threads
+                </div>
+
+                <div class="card-body">
+                    Redis does not work on windows
+                </div>
+            </div><!-- /.card -->
+        </div>
     </div>
 </div>
 @endsection

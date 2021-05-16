@@ -177,4 +177,14 @@ class Thread extends Model
 
         return $this->updated_at > cache($key);
     }
+
+    public function recordVisit()
+    {
+
+    }
+
+    public function visits()
+    {
+
+    }
 }
